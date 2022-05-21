@@ -84,7 +84,7 @@ order by 1, 2
 --Looking for total Population vs vaccinations
 
 Select dea.continent, dea.location, dea.date, dea.population, vac.new_vaccinations
-, SUM(Cast(vac.new_vaccinations as int)) OVER (Partition by dea.location Order BY dea.location, dea.date) as Totalpeoplevaccinated
+, SUM(Cast(vac.new_vaccinations as bigint)) OVER (Partition by dea.location Order BY dea.location, dea.date) as Totalpeoplevaccinated
 From PortfolioProject..covidvaccinations vac
 JOIN PortfolioProject..coviddeaths dea
  ON vac.location = dea.location
@@ -98,7 +98,7 @@ JOIN PortfolioProject..coviddeaths dea
  as
  (
 Select dea.continent, dea.location, dea.date, dea.population, vac.new_vaccinations
-, SUM(Cast(vac.new_vaccinations as int)) OVER (Partition by dea.location Order BY dea.location, dea.date) as Totalpeoplevaccinated
+, SUM(Cast(vac.new_vaccinations as bigint)) OVER (Partition by dea.location Order BY dea.location, dea.date) as Totalpeoplevaccinated
 From PortfolioProject..covidvaccinations vac
 JOIN PortfolioProject..coviddeaths dea
  ON vac.location = dea.location
@@ -127,7 +127,7 @@ JOIN PortfolioProject..coviddeaths dea
 
  insert into #percentpopulationvaccinated
  Select dea.continent, dea.location, dea.date, dea.population, vac.new_vaccinations
-, SUM(Cast(vac.new_vaccinations as int)) OVER (Partition by dea.location Order BY dea.location, dea.date) as Totalpeoplevaccinated
+, SUM(Cast(vac.new_vaccinations as bigint)) OVER (Partition by dea.location Order BY dea.location, dea.date) as Totalpeoplevaccinated
 From PortfolioProject..covidvaccinations vac
 JOIN PortfolioProject..coviddeaths dea
  ON vac.location = dea.location
@@ -143,7 +143,7 @@ select * , ( Totalpeoplevaccinated /population)*100
 
  create view percentpopulationvaccinated as
   Select dea.continent, dea.location, dea.date, dea.population, vac.new_vaccinations
-, SUM(Cast(vac.new_vaccinations as int)) OVER (Partition by dea.location Order BY dea.location, dea.date) as Totalpeoplevaccinated
+, SUM(Cast(vac.new_vaccinations as bigint)) OVER (Partition by dea.location Order BY dea.location, dea.date) as Totalpeoplevaccinated
 From PortfolioProject..covidvaccinations vac
 JOIN PortfolioProject..coviddeaths dea
  ON vac.location = dea.location
